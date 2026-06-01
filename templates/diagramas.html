@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramientas de Calidad - Yape Survey Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/diagrams.css') }}">
+    <style>
+        .ishikawa-container { overflow-x: auto; padding: 20px; background: #f8f9fa; border: 1px solid #000; }
+        .nav-tools .nav-link { color: #666; font-weight: 700; border-radius: 0; border-bottom: 3px solid transparent; text-transform: uppercase; font-size: 0.8rem; }
+        .nav-tools .nav-link.active { color: #000; border-bottom-color: #000; background: transparent; }
+        .tool-section { display: none; }
+        .tool-section.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="bi bi-qr-code-scan me-2"></i><span>Cuestionario Yape</span>
+            </a>
+            <div class="d-flex gap-2 align-items-center" id="mainNav">
+                <a href="{{ url_for('index') }}" class="btn btn-sm nav-link-custom">Formulario</a>
+                <a href="{{ url_for('index') }}" class="btn btn-sm nav-link-custom">Análisis</a>
+                <div class="vr mx-2 text-secondary opacity-25"></div>
+                <a href="{{ url_for('diagramas') }}" class="btn btn-sm btn-primary shadow-sm px-3">
+                    <i class="bi bi-bar-chart-fill me-1"></i> Herramientas de Calidad
+                </a>
+                <a href="{{ url_for('estadisticas') }}" class="btn btn-sm btn-outline-primary px-3">
+                    <i class="bi bi-table me-1"></i> Estadísticas
+                </a>
+            </a>
+        </div>
+    </nav>
+
+    <main class="container main-content pt-4">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold">HERRAMIENTAS DE CALIDAD</h2>
+            <span class="badge bg-dark px-3 py-2" id="totalRespuestasD">0 respuestas</span>
+        </div>
+
+        <ul class="nav nav-pills nav-tools justify-content-center mb-4 border-bottom" id="toolTabs">
+            <li class="nav-item"><a class="nav-link active" href="#" data-target="pareto-tab">1. Pareto (80/20)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-target="ishikawa-tab">2. Ishikawa</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-target="control-tab">3. Gráfico Control</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-target="dispersion-tab">4. Dispersión</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-target="histograma-tab">5. Histograma</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-target="flujo-tab">6. Flujo</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" data-target="hoja-tab">7. Hoja Verificación</a></li>
+        </ul>
+
+        <div id="toolsContent">
+            <div id="pareto-tab" class="tool-section active">
+                <div id="chartsContainer"></div>
+            </div>
+
+            <div id="ishikawa-tab" class="tool-section">
+                <div class="chart-wrapper text-center">
+                    <div class="chart-title">Diagrama de Espina de Pescado</div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Ishikawa_Diagram.svg/1200px-Ishikawa_Diagram.svg.png" class="img-fluid" style="max-height: 400px; filter: grayscale(1);">
+                </div>
+            </div>
+
+            <div id="control-tab" class="tool-section">
+                <div class="chart-wrapper">
+                    <div class="chart-title">Gráfico de Control de Estabilidad</div>
+                    <div style="height: 400px;"><canvas id="controlChart"></canvas></div>
+                </div>
+            </div>
+
+            <div id="dispersion-tab" class="tool-section">
+                <div class="chart-wrapper">
+                    <div class="chart-title">Diagrama de Correlación</div>
+                    <div style="height: 400px;"><canvas id="scatterChart"></canvas></div>
+                </div>
+            </div>
+
+            <div id="histograma-tab" class="tool-section">
+                <div class="chart-wrapper">
+                    <div class="chart-title">Histograma de Frecuencias</div>
+                    <div style="height: 400px;"><canvas id="histogramChart"></canvas></div>
+                </div>
+            </div>
+
+            <div id="flujo-tab" class="tool-section text-center">
+                <div class="chart-wrapper">
+                    <div class="chart-title">Mapa de Procesos - Seguridad Yape</div>
+                    <div class="p-5 border bg-light">
+                        <i class="bi bi-arrow-right-circle fs-1"></i>
+                        <p class="mt-3 fw-bold">Inicio -> Identificación -> Validación -> Ejecución -> Fin</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="hoja-tab" class="tool-section">
+                <div class="chart-wrapper" id="verificationSheetContainer"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../static/js/diagramas.js"></script>
+</body>
+</html>

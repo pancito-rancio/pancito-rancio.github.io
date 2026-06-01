@@ -1,0 +1,14 @@
+/* Specific styles for chart-wrapper and chart-title to match the new theme */
+.chart-wrapper {
+    border: 1px solid #000000;
+    border-radius: 0px;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.1);
+    padding: 1.6rem; /* Added padding for consistency with .card */
+    margin-bottom: 2rem; /* Added margin for spacing between charts */
+}
+.chart-title {
+    color: #000000;
+    border-bottom: 1px solid #000000;
+    padding-bottom: 0.8rem; /* Added padding for spacing below title */
+    margin-bottom: 1.5rem; /* Added margin for spacing below title */
+}

@@ -1,0 +1,139 @@
+:root {
+    --primary: #000000;
+    --primary-light: #f3f4f6;
+    --bg: #ffffff;
+    --card-bg: #ffffff;
+    --text: #000000;
+    --text-light: #666666;
+    --radius: 8px;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.navbar {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid #000000;
+    padding: 1rem 1.5rem;
+}
+
+.navbar-brand {
+    font-weight: 900;
+    color: var(--primary) !important;
+    letter-spacing: -0.05em;
+}
+
+.main-content { padding-top: 5rem; padding-bottom: 5rem; }
+
+.section-card {
+    display: none;
+    animation: fadeIn 0.4s ease-out;
+}
+.section-card.active { display: block; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    border: 1px solid #000000;
+    border-radius: 0px;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.1);
+    padding: 1.6rem;
+}
+
+.form-control { padding: 0.8rem; border-radius: 10px; border: 1px solid #e2e8f0; }
+.form-control:focus { box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1); border-color: var(--primary); }
+
+.form-check {
+    padding: 1rem 1rem 1rem 3.5rem;
+    border-radius: 12px;
+    border: 1px solid #f1f5f9;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.form-check:hover {
+    background: #f8faff;
+    border-color: var(--primary-light);
+}
+
+.btn-primary {
+    background: var(--primary);
+    border: 1px solid var(--primary);
+    color: #ffffff;
+    padding: 0.92rem 2rem;
+    border-radius: 0px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #ffffff;
+    color: #000000;
+}
+
+/* Menú lateral moderno */
+.nav-pills .nav-link {
+    color: var(--text-light);
+    border-radius: 10px;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.nav-pills .nav-link.active {
+    background: rgba(124, 58, 237, 0.1);
+    color: var(--primary);
+}
+
+/* nav-link-custom */
+.nav-link-custom {
+    color: var(--text-light);
+}
+
+.nav-link-custom:hover,
+.nav-link-custom.active {
+    background: #f3f4f6;
+    color: var(--primary);
+}
+
+/* Badge personalizado */
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    border-left: 4px solid var(--primary);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+    .navbar-brand span { display: none; }
+}
+
+/* Estilo Blanco y Negro para el botón de la esquina */
+.counter-floating-box {
+    position: fixed;
+    top: 85px;
+    left: 20px;
+    z-index: 1050;
+}
+
+.btn-counter {
+    background: #000000;
+    color: #ffffff;
+    border: 1px solid #000000;
+    padding: 8px 15px;
+    font-weight: 900;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    box-shadow: 5px 5px 0px rgba(0,0,0,0.1);
+}

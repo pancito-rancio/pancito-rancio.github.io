@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas - Encuesta Yape</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        /* The inline styles for chart-container are not needed if style.css handles it */
+        /* .chart-container {
+            position: relative; */
+            /* height: 400px; */
+            /* width: 100%; */
+        /* } */
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="bi bi-qr-code-scan me-2"></i><span>Cuestionario Yape</span>
+            </a>
+            <div class="d-flex gap-2 align-items-center" id="mainNav">
+                <a href="{{ url_for('index') }}" class="btn btn-sm nav-link-custom">Formulario</a>
+                <a href="{{ url_for('index') }}" class="btn btn-sm nav-link-custom">Análisis</a>
+                <div class="vr mx-2 text-secondary opacity-25"></div>
+                <a href="{{ url_for('diagramas') }}" class="btn btn-sm btn-primary shadow-sm px-3">
+                    <i class="bi bi-bar-chart-fill me-1"></i> Herramientas de Calidad
+                </a>
+                <a href="{{ url_for('estadisticas') }}" class="btn btn-sm btn-outline-primary px-3">
+                    <i class="bi bi-table me-1"></i> Estadísticas
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menú -->
+    <div class="corner-menu-wrapper">
+        <button id="hamburgerMenuBtn"
+                class="btn btn-primary btn-hamburger shadow"
+                type="button"
+                aria-label="Abrir menú">
+            <i class="bi bi-list fs-4"></i>
+        </button>
+
+        <div id="cornerMenu" class="corner-menu" role="menu">
+            <a class="corner-menu-link" href="{{ url_for('index') }}">
+                <i class="bi bi-ui-checks-grid me-2"></i>Formulario
+            </a>
+
+            <a class="corner-menu-link" href="{{ url_for('diagramas') }}">
+                <i class="bi bi-bar-chart me-2"></i>Diagramas
+            </a>
+
+            <a class="corner-menu-link" href="{{ url_for('estadisticas') }}">
+                <i class="bi bi-table me-2"></i>Estadísticas
+            </a>
+        </div>
+    </div>
+
+    <!-- Contenido -->
+    <div class="container main-content mt-5 pt-5">
+        <div class="row justify-content-center">
+            <div class="col-12">
+
+                <div class="card shadow">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="bi bi-table me-2"></i>
+                            Estadísticas Detalladas
+                        </h5>
+
+                        <span class="badge bg-secondary" id="totalRespuestasE">
+                            0 respuestas
+                        </span>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="text-center mb-4">
+                            <button class="btn btn-primary btn-lg"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalDiagramas">
+                                <i class="bi bi-bar-chart-line-fill me-2"></i>
+                                Ver Diagramas
+                            </button>
+                        </div>
+
+                        <div id="statsContainer"></div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Único -->
+    <div class="modal fade" id="modalDiagramas" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-graph-up-arrow me-2"></i>
+                        Diagramas de la Encuesta
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row g-4">
+
+                        <!-- Gráfico de Pastel -->
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-header text-center">
+                                    <strong>Gráfico de Pastel</strong>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="chart-container">
+                                        <canvas id="pieChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Diagrama de Puntos -->
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-header text-center">
+                                    <strong>Diagrama de Puntos</strong>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="chart-container">
+                                        <canvas id="scatterChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+        <div class="container text-center">
+            <p class="mb-0">
+                Estadísticas — Encuesta Yape
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Menú -->
+    <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+
+    <!-- Estadísticas -->
+    <script src="{{ url_for('static', filename='js/estadisticas.js') }}"></script>
+
+    <!-- Gráficos -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Gráfico de pastel
+            const pieCtx = document.getElementById('pieChart');
+
+            new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: [
+                        'Usa Yape',
+                        'No usa Yape',
+                        'Uso ocasional'
+                    ],
+                    datasets: [{
+                        data: [55, 25, 20]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Diagrama de puntos
+            const scatterCtx = document.getElementById('scatterChart');
+
+            new Chart(scatterCtx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Participantes',
+                        data: [
+                            {x:1, y:5},
+                            {x:2, y:8},
+                            {x:3, y:12},
+                            {x:4, y:9},
+                            {x:5, y:15},
+                            {x:6, y:13},
+                            {x:7, y:20},
+                            {x:8, y:17}
+                        ],
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Encuestado'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Puntaje'
+                            }
+                        }
+                    }
+                }
+            });
+
+        });
+    </script>
+
+</body>
+</html>
